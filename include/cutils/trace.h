@@ -18,7 +18,7 @@
 #define _LIBS_CUTILS_TRACE_H
 
 #include <inttypes.h>
-#include <stdatomic.h>
+
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -112,13 +112,6 @@ void atrace_set_debuggable(bool debuggable);
 void atrace_set_tracing_enabled(bool enabled);
 
 /**
- * Flag indicating whether setup has been completed, initialized to 0.
- * Nonzero indicates setup has completed.
- * Note: This does NOT indicate whether or not setup was successful.
- */
-extern atomic_bool atrace_is_ready;
-
-/**
  * Set of ATRACE_TAG flags to trace for, initialized to ATRACE_TAG_NOT_READY.
  * A value of zero indicates setup has failed.
  * Any other nonzero value indicates setup has succeeded, and tracing is on.
@@ -137,12 +130,7 @@ extern int atrace_marker_fd;
  * This can be explicitly run to avoid setup delay on first trace function.
  */
 #define ATRACE_INIT() atrace_init()
-static inline void atrace_init()
-{
-    if (CC_UNLIKELY(!atomic_load_explicit(&atrace_is_ready, memory_order_acquire))) {
-        atrace_setup();
-    }
-}
+void atrace_init();
 
 /**
  * Get the mask of all tags currently enabled.

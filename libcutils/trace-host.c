@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+#include <stdatomic.h>
 #include <cutils/trace.h>
 
 #ifndef __unused

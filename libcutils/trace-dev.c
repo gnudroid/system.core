@@ -181,7 +181,11 @@ done:
 
 void atrace_setup()
 {
-    pthread_once(&atrace_once_control, atrace_init_once);
+    /** the atomic check was moved from the header to here, as c11 atomics
+        are incompatible with c++ **/
+    if (CC_UNLIKELY(!atomic_load_explicit(&atrace_is_ready, memory_order_acquire))) {
+        pthread_once(&atrace_once_control, atrace_init_once);
+    }
 }
 
 void atrace_begin_body(const char* name)
