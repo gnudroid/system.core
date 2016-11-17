@@ -20,6 +20,7 @@
 
 #include <utils/Log.h>
 
+#include <string.h>
 #include <sys/param.h>
 
 #include <cassert>
