@@ -134,7 +134,10 @@ extern int atrace_marker_fd;
  * This can be explicitly run to avoid setup delay on first trace function.
  */
 #define ATRACE_INIT() atrace_init()
-void atrace_init();
+static inline void atrace_init()
+{
+    atrace_setup();
+}
 
 /**
  * Get the mask of all tags currently enabled.
