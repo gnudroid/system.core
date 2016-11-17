@@ -83,6 +83,10 @@ __BEGIN_DECLS
 #error ATRACE_TAG must be defined to be one of the tags defined in cutils/trace.h
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Opens the trace file for writing and reads the property for initial tags.
  * The atrace.tags.enableflags property sets the tags to trace.
@@ -237,6 +241,10 @@ static inline void atrace_int64(uint64_t tag, const char* name, int64_t value)
         atrace_int64_body(name, value);
     }
 }
+
+#ifdef __cplusplus
+};
+#endif
 
 __END_DECLS
 
